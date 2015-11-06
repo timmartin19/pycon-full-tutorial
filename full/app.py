@@ -7,8 +7,7 @@ from flask import Flask
 from flask_ripozo import FlaskDispatcher
 from ripozo import adapters
 
-from full_example.resources import PostResource, CommentResource
-
+from full.resources import PostResource, CommentResource
 
 app = Flask('fullexample')
 

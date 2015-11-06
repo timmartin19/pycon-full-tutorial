@@ -5,11 +5,12 @@ from __future__ import unicode_literals
 
 from ripozo import restmixins, apimethod, translate, ListRelationship, Relationship
 from ripozo.resources.fields.common import IntegerField
-from full_example.managers import CommentManager, PostManager, session_handler
 
+from full.managers import CommentManager, PostManager, session_handler
 
 
 class PostResource(restmixins.CRUDL):
+    append_slash = True
     pks = ('id',)
     manager = PostManager(session_handler)
     resource_name = 'post'
@@ -17,16 +18,21 @@ class PostResource(restmixins.CRUDL):
         ListRelationship('comments', relation='CommentResource'),
     )
 
-    @translate(fields=[IntegerField('id', required=True)])
-    @apimethod(route='/create_comment', methods=('POST',))
+    @translate(fields=[IntegerField('id', required=True)], validate=True)
+    @apimethod(route='/create_comment/', methods=['POST'])
     def create_comment(cls, request):
-        request.body_args = request.body_args.update(request.url_params)
+        args = request.body_args
+        args['post_id'] = request.get('id')
+        request.body_args = args
         CommentResource.create(request)
         return cls.retrieve(request)
 
 
 class CommentResource(restmixins.CRUDL):
+    append_slash = True
     pks = ('id',)
     manager = CommentManager(session_handler)
     resource_name = 'comment'
-    _relationships = (Relationship('post', property_map=dict(post_id='id'), relation='PostResource'),)
+    _relationships = (
+        Relationship('post', property_map=dict(post_id='id'), relation='PostResource'),
+    )

@@ -14,7 +14,7 @@ class HelloResource(ResourceBase):
     append_slash = True
     resource_name = 'hello'
     _relationships = (
-        Relationship('related', relation='RelatedResource', property_map=dict(name='name')),
+        Relationship('related', relation='RelatedResource', property_map=dict(name='name'), embedded=True),
     )
 
     @translate(fields=[fields.StringField('name', minimum=3, required=True)], validate=True)
@@ -31,7 +31,7 @@ class RelatedResource(ResourceBase):
     @translate(fields=[fields.StringField('name', minimum=3, required=True)], validate=True)
     @apimethod(methods=['GET'])
     def hello_name(cls, request):
-        name = request.get('name')
+        name = request.url_params.get('name')
         content = 'Your name is {}'.format(name)
         return cls(properties=dict(content=content, name=name))
 

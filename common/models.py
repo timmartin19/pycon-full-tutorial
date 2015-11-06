@@ -17,7 +17,7 @@ class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
     username = Column(String(length=50), nullable=True)
-    post = Column(Text, nullable=False)
+    post_text = Column(Text, nullable=False)
     comments = relationship('Comment', backref='post')
 
 
@@ -25,7 +25,7 @@ class Comment(Base):
     __tablename__ = 'comment'
     id = Column(Integer, primary_key=True)
     username = Column(String(length=50), nullable=True)
-    comment = Column(Text, nullable=False)
+    comment_text = Column(Text, nullable=False)
     post_id = Column(Integer, ForeignKey('post.id'), nullable=False)
 
 

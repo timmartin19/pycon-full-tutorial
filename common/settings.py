@@ -3,4 +3,4 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-SQLALCHEMY_URI = 'sqlite:///../models.sqlite'
+SQLALCHEMY_URI = 'sqlite:///models.sqlite'

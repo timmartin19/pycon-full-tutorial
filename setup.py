@@ -25,7 +25,8 @@ setup(
         'flask',
         'ripozo-sqlalchemy',
         'requests',
-        'SQLAlchemy'
+        'SQLAlchemy',
+        'pypermedia'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -42,7 +43,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'helloworld = helloworld_example:main',
+            'helloworld = helloworld:main',
             'easy = easy_example:main',
             'full = full_example.app:main',
             'relationships = relationship_example:main'
@@ -54,11 +55,5 @@ setup(
         ]
     },
     keywords='REST HATEOAS Hypermedia RESTful SIREN HAL API JSONAPI web framework',
-    tests_require=[
-        'unittest2',
-        'tox',
-        'mock',
-    ],
-    test_suite="ripozo_tests",
     url='http://ripozo.readthedocs.org/'
 )
